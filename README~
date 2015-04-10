@@ -1,0 +1,14 @@
+Implement a shell – sbush, must be able to
+
+Support changing current directory ( cd )
+Execute binaries interactively
+Execute scripts
+Execute pipelines of binaries ( /bin/ls | /bin/grep test )
+Set and use PATH and PS1 variables
+
+Implement a standard library – sblibc, must be able to
+
+Provide all functionality needed by your sbush
+Implement all functions from include/stdlib.h
+Rely on 64-bit Linux syscall numbers and conventions
+
