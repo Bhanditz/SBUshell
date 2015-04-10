@@ -3,19 +3,21 @@
 
 #include <sys/defs.h>
 
-extern __thread int errno;
+//extern __thread int errno;
 
 int main(int argc, char* argv[], char* envp[]);
 void exit(int status);
 
 // memory
 typedef uint64_t size_t;
+typedef uint64_t off_t;
+void *mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset);
+int munmap(void* start,size_t length);
 void *malloc(size_t size);
 void free(void *ptr);
 int brk(void *end_data_segment);
 typedef uint64_t off_t;
-void *mmap(void* addr, size_t length, int prot, int flags, int fd, off_t offset);
-int munmap(void* start,size_t length);
+
 
 // processes
 typedef uint32_t pid_t;
@@ -24,6 +26,11 @@ pid_t getpid(void);
 pid_t getppid(void);
 int execve(const char *filename, char *const argv[], char *const envp[]);
 pid_t waitpid(pid_t pid, int *status, int options);
+struct timespec {
+    uint64_t  tv_sec;        /* seconds */
+    long   tv_nsec;       /* nanoseconds */
+};
+int nanosleep(const struct timespec *req, struct timespec *rem);
 unsigned int sleep(unsigned int seconds);
 unsigned int alarm(unsigned int seconds);
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "stdlib.h"
-#include "string.h"
-#include "sbush.h"
+#include <stdlib.h>
+#include <string.h>
+#include <sbush.h>
 
 
 int isContain(char* str, char ch) {
@@ -72,7 +72,6 @@ int getEnvp(char* envp[], char* name, char* parameter) {
 }
 
 void getSpeEnvp(char* envp[]) {
-	strcpy(PS1, "sbush");
 	//deal with the USER envp
 	if(getEnvp(envp, "USER", USER) < 0) {
 		printf("[ERROR]: get USER envp failed\n");
@@ -85,6 +84,8 @@ void getSpeEnvp(char* envp[]) {
 	if(getEnvp(envp, "PATH", PATH) < 0) {
 		printf("[ERROR]: get PATH envp failed\n");
 	}
+	strcpy(PS1, USER);
+	strcat(PS1, "@SBU-SH");
 }
 
 int pwd(char *path) {
@@ -129,9 +130,9 @@ void prompt() {
 		exit(0);
 	}
 	if(!strncmp(pathName, HOME, strlen(HOME))) {
-		printf("%s@%s:~%s$ ", USER, PS1, pathName+strlen(HOME));
+		printf("%s:~%s$ ", PS1, pathName+strlen(HOME));
 	} else {
-		printf("%s@%s:%s$ ", USER, PS1, pathName);
+		printf("%s:%s$ ", PS1, pathName);
 	}
 	free(pathName);
 }
@@ -234,6 +235,7 @@ int externalCommand(char* command, char* argv[], char* envp[]) {
 	}
 
 	while(subPath[i] != NULL) {
+		memset(dir, 0, sizeof(dir));
 		strcpy(dir, subPath[i]);
 		strcat(dir, "/");
 		strcat(dir, command);
@@ -260,7 +262,7 @@ int runScriptFile(char* command, char* envp[]) {
 	int fd, pid, status, n;
 	char buf[NAME_MAX];
 	char* contents[10];
-	char* fileName = command + 2;
+	char* fileName = command;
 
 	if((fd = open(fileName, O_RDONLY)) < 0) {
 		printf("[ERROR]: sbush: %s:  No such file or directory\n", fileName);

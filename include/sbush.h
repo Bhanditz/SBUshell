@@ -1,14 +1,15 @@
 #define MAX_LINE 2048
-
+#define BUF_SIZE 1024
 //GLOBAL VAL
 //environment variable
 char USER[NAME_MAX];
-
 char HOME[MAX_LINE];
-
 char PATH[MAX_LINE];
-
 char PS1[MAX_LINE];
+
+//use for readdir
+int nread;
+char buf[BUF_SIZE];
 
 //functions
 int isContain(char* str, char ch);

@@ -9,7 +9,7 @@ static __inline uint64_t syscall_0(uint64_t n) {
     __asm__ __volatile__("syscall"
                     :"=a"(ret)
                     :"0"(n)
-                    :"memory");
+                    );
     return ret;
 }
 

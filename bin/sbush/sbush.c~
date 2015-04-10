@@ -1,7 +1,24 @@
+//------------------------------------------
+//Copyright © 2013 by Jun Zeng && Junao Wang 
+//-----------All rights reserved------------
+//------------------------------------------
+
+
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sbush.h>
+#include "stdlib.h"
+#include "string.h"
+#include "sbush.h"
+
+int isContain(char *, char); 
+char* trim(char *, char *);
+void getSpeEnvp(char **);
+int pwd(char *);
+void prompt();
+void parseCommand(char *, char *, char **);
+int runScriptFile(char *, char **);
+void dealWithCommand(char **, char **);
+void dealWithPipe(int, char **, char **, char **);
+
 
 
 int main(int argc, char* argv[], char* envp[]) {
@@ -15,7 +32,7 @@ int main(int argc, char* argv[], char* envp[]) {
 	getSpeEnvp(envp);
 
 	//deal with the script.sh--------------------------------------------
-	if(argc >= 2) {
+	if(argc == 2) {
 		runScriptFile(argv[1], envp);
 		exit(0);
 	}
@@ -36,7 +53,7 @@ int main(int argc, char* argv[], char* envp[]) {
 		memset(inputLine, 0, sizeof(inputLine));
 		memset(contents, 0, sizeof(contents));
 		
-		scanf("%s", inputLine);
+		scanf("%[^\n]%*c", inputLine);
 
 		trim(tmp, inputLine);
 
@@ -59,7 +76,7 @@ int main(int argc, char* argv[], char* envp[]) {
 		} else {
 
 			parseCommand(tmp, " ", contents);
-
+			
 			dealWithCommand(contents, envp);    
 		}
 	}
