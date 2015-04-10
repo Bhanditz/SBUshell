@@ -39,3 +39,4 @@ submit: clean
 clean:
 	find $(ROOTBIN) -type f ! -name .empty -print -delete
 	rm -rfv obj kernel newfs.506 $(ROOTBOOT)/kernel/kernel
+	rm *~
